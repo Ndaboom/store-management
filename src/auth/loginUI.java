@@ -5,9 +5,16 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.awt.Font;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
 import javax.swing.JTextField;
+
+import dashboard.homeUI;
+
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 
@@ -16,6 +23,9 @@ public class loginUI {
 	private JFrame frmAuthentification;
 	private JTextField textField;
 	private JPasswordField passwordField;
+	Statement stmt;
+	Connexion dbConnexion = new Connexion();
+	public static String t1;
 
 	/**
 	 * Launch the application.
@@ -70,6 +80,7 @@ public class loginUI {
 		frmAuthentification.setResizable(false);
 		frmAuthentification.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmAuthentification.getContentPane().setLayout(null);
+		frmAuthentification.setLocationRelativeTo(null);
 		
 		JPanel panel = new JPanel();
 		panel.setToolTipText("Entrez votre nom d'utilisateur");
@@ -104,6 +115,34 @@ public class loginUI {
 		JButton btnNewButton = new JButton("Commencer");
 		btnNewButton.setBounds(162, 210, 112, 40);
 		btnNewButton.setForeground(new java.awt.Color(0, 51, 255));
+		btnNewButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	login(evt);
+            }
+        });
 		panel.add(btnNewButton);
+	}
+	
+	 private void login(java.awt.event.ActionEvent evt) {
+		 String requete ="select * from users where username ='"+textField.getText()+"' and password ='"+passwordField.getText()+"' ";
+	        try{
+	            
+	            stmt=dbConnexion.ObtenirConnexion().createStatement();
+	            ResultSet resultat= stmt.executeQuery(requete);
+
+	        if(!resultat.next()){
+	            JOptionPane.showMessageDialog(null, "Invalide login détails!", "Login Error",JOptionPane.ERROR_MESSAGE);
+	            textField.setText(null);
+	            passwordField.setText(null);
+	        }else{
+	             this.t1 = resultat.getString("username");
+	             frmAuthentification.setVisible(false);
+	          new homeUI().setVisible(true);                
+	        }   
+	            
+	        }catch(Exception e){
+	            System.out.println("--> Exception : " + e) ;
+	           
+	        }
 	}
 }
