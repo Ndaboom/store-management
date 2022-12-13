@@ -45,9 +45,9 @@ public class ProductList extends javax.swing.JInternalFrame {
             stmt = maConnexion.ObtenirConnexion().createStatement();
             ResultSet resultat= stmt.executeQuery(requeteListeLivre);
             while(resultat.next()){
-                model.addRow(new Object [] {resultat.getString("nom_produit"),resultat.getString("prix_produit"), resultat.getString("quantite_produit"),
-                    resultat.getString("secteur_produit"),resultat.getDate("date_expiration"),resultat.getString("statut_produit"),
-                    resultat.getString("unite_produit")});
+                model.addRow(new Object [] {resultat.getString("nom"),resultat.getString("PV"), resultat.getString("quantite"),
+                    resultat.getString("secteur"),resultat.getDate("date_expiration"),resultat.getString("statut"),
+                    resultat.getString("unite")});
             }
                 }catch(SQLException ex){
         System.out.println(ex);
