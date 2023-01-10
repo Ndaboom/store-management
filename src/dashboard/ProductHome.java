@@ -70,7 +70,6 @@ public class ProductHome extends javax.swing.JInternalFrame {
 	        	total_PAT_displayer.setText(resultat.getString(1));
 	        }
 	
-	
        }catch(Exception e){
     	   JOptionPane.showMessageDialog(null,"Error loading total PAT"+ e.toString());
        }
@@ -166,11 +165,6 @@ public class ProductHome extends javax.swing.JInternalFrame {
         product_name.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTNomActionPerformed(evt);
-            }
-        });
-        product_name.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTNomKeyTyped(evt);
             }
         });
 
@@ -590,14 +584,6 @@ public class ProductHome extends javax.swing.JInternalFrame {
 	private void jTNomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTNomActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTNomActionPerformed
-
-    private void jTNomKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTNomKeyTyped
-        // TODO add your handling code here:
-        char c=evt.getKeyChar();
-        if(Character.isDigit(c) || (c==KeyEvent.VK_BACK_SPACE) || c==KeyEvent.VK_DELETE){
-            evt.consume();
-        }
-    }//GEN-LAST:event_jTNomKeyTyped
 
     private void jCSexeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCSexeActionPerformed
         // TODO add your handling code here:
