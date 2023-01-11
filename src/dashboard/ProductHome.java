@@ -79,11 +79,10 @@ public class ProductHome extends javax.swing.JInternalFrame {
        try{
 
            java.sql.Statement stmt1= maConnexion.ObtenirConnexion().createStatement();
-           java.sql.ResultSet resultat= stmt1.executeQuery("SELECT SUM(PVT) FROM products");
+           java.sql.ResultSet resultat = stmt1.executeQuery("SELECT SUM(PVT) FROM products");
 	        while(resultat.next()) {
 	        	pvt_displayer.setText(resultat.getString(1));
 	        }
-	
 	
       }catch(Exception e){
    	   JOptionPane.showMessageDialog(null,"Error loading total PVT"+ e.toString());
@@ -94,7 +93,6 @@ public class ProductHome extends javax.swing.JInternalFrame {
     public ProductHome() {
         initComponents();
         product_expiry_date.setDate(new Date());
-        
         
         setLocation(8,32);
         
@@ -745,7 +743,7 @@ public class ProductHome extends javax.swing.JInternalFrame {
           }catch(Exception e){
 	
 	
-}
+          }
         
     }//GEN-LAST:event_jTSearchKeyReleased
 

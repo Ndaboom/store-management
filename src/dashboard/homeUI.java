@@ -30,7 +30,6 @@ public class homeUI extends javax.swing.JFrame{
 	        jSeparator3 = new javax.swing.JPopupMenu.Separator();
 	        jMenuItem7 = new javax.swing.JMenuItem();
 	        jMenu4 = new javax.swing.JMenu();
-	        jMenu4.setEnabled(false);
 	        jMenuItem4 = new javax.swing.JMenuItem();
 	        jSeparator4 = new javax.swing.JPopupMenu.Separator();
 	        jMenuItem8 = new javax.swing.JMenuItem();
@@ -131,7 +130,7 @@ public class homeUI extends javax.swing.JFrame{
 
 	        jMenu4.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 	        jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/avance 32.png"))); // NOI18N
-	        jMenu4.setText("Comptabilité");
+	        jMenu4.setText("Sortie");
 
 	        jMenuItem4.setText("Accueil");
 	        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
@@ -142,14 +141,14 @@ public class homeUI extends javax.swing.JFrame{
 	        jMenu4.add(jMenuItem4);
 	        jMenu4.add(jSeparator4);
 
-	        jMenuItem8.setText("Liste Avance");
+	        jMenuItem8.setText("Liste sorties");
 	        jMenu4.add(jMenuItem8);
 
 	        jMenuBar1.add(jMenu4);
 
 	        jMenu5.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 	        jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/divers 32.png"))); // NOI18N
-	        jMenu5.setText("DEMANDES DIVERSES");
+	        jMenu5.setText("Comptabilité");
 	        jMenuBar1.add(jMenu5);
 
 	        jMenu6.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -249,11 +248,11 @@ public class homeUI extends javax.swing.JFrame{
 
 	    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
 	        // TODO add your handling code here
-	        AvanceHome addAvance=new AvanceHome();
+	        WithdrawalsHome withdrawalsScreen =new WithdrawalsHome();
 	        jPAppli.removeAll();
 	        jPAppli.repaint();
-	        jPAppli.add(addAvance);
-	        addAvance.show();
+	        jPAppli.add(withdrawalsScreen);
+	        withdrawalsScreen.show();
 	    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
 	    /**
