@@ -143,6 +143,12 @@ public class homeUI extends javax.swing.JFrame{
 
 	        jMenuItem8.setText("Liste sorties");
 	        jMenu4.add(jMenuItem8);
+	        
+	        jMenuItem8.addMouseListener(new java.awt.event.MouseAdapter() {
+	            public void mouseClicked(java.awt.event.MouseEvent evt) {
+	                jMenu7MouseClicked(evt);
+	            }
+	        });
 
 	        jMenuBar1.add(jMenu4);
 
@@ -213,6 +219,15 @@ public class homeUI extends javax.swing.JFrame{
 	        // TODO add your handling code here:
 	        System.exit(0);
 	    }//GEN-LAST:event_jMenu6MouseClicked
+	    
+	    private void jMenu7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu6MouseClicked
+	        // TODO add your handling code here:
+	    	WidthdrawalsList widthdraws = new WidthdrawalsList();
+	        jPAppli.removeAll();
+	        jPAppli.repaint();
+	        jPAppli.add(widthdraws);
+	        widthdraws.show();
+	    }//GEN-LAST:event_jMenu6MouseClicked
 
 	    private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
 	        // TODO add your handling code here:
@@ -239,7 +254,7 @@ public class homeUI extends javax.swing.JFrame{
 
 	    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
 	        // TODO add your handling code here:
-	        ListePromotion listePro=new ListePromotion();
+	        WidthdrawalsList listePro=new WidthdrawalsList();
 	        jPAppli.removeAll();
 	        jPAppli.repaint();
 	        jPAppli.add(listePro);

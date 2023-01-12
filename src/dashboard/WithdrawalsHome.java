@@ -323,7 +323,7 @@ public final class WithdrawalsHome extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(jTable1);
 
         jPanel7.setBackground(new java.awt.Color(204, 255, 204));
-        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Recherche d'un employé"));
+        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Recherche d'une transaction"));
 
         jTSearch.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -333,7 +333,7 @@ public final class WithdrawalsHome extends javax.swing.JInternalFrame {
 
         jLTel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLTel1.setForeground(new java.awt.Color(0, 51, 255));
-        jLTel1.setText("ENTRER LE PRENOM");
+        jLTel1.setText("ENTRER LA DATE");
 
         jTId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
