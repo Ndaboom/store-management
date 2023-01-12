@@ -23,8 +23,6 @@ public class loginUI {
 	private JFrame frmAuthentification;
 	private JTextField textField;
 	private JPasswordField passwordField;
-	Statement stmt;
-	Connexion dbConnexion = new Connexion();
 	public static String t1;
 
 	/**
@@ -123,11 +121,14 @@ public class loginUI {
 		panel.add(btnNewButton);
 	}
 	
+	Statement stmt;
+	Connexion dbConnexion = new Connexion();
+	
 	 private void login(java.awt.event.ActionEvent evt) {
 		 String requete ="select * from users where username ='"+textField.getText()+"' and password ='"+passwordField.getText()+"' ";
 	        try{
 	            
-	            stmt=dbConnexion.ObtenirConnexion().createStatement();
+	            stmt= dbConnexion.ObtenirConnexion().createStatement();
 	            ResultSet resultat= stmt.executeQuery(requete);
 
 	        if(!resultat.next()){

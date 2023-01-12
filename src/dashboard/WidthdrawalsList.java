@@ -16,36 +16,32 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author MyLau
  */
-public class ListePromotion extends javax.swing.JInternalFrame {
+public class WidthdrawalsList extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form ListeEmploye
      */
     Statement stmt;
     Connexion maConnexion=new Connexion();
-    public ListePromotion() {
+    public WidthdrawalsList() {
         initComponents();
         setLocation(8,32);
         DefaultTableModel model=new DefaultTableModel();
-        model.addColumn("code");
+        model.addColumn("ID Produit");
         model.addColumn("Nom");        
-        model.addColumn("Prénom");
-        model.addColumn("Sexe");
-        model.addColumn("NIF");
-        model.addColumn("Niveau");
-        model.addColumn("Ancien Poste"); 
-        model.addColumn("Nouveau Poste");        
-        model.addColumn("Date Promotion");        
-        model.addColumn("Nouveau Salaire");
+        model.addColumn("Prix vente");
+        model.addColumn("PVT");
+        model.addColumn("Quantite vendu");
+        model.addColumn("Date vente");
          
 
-        String requeteListeLivre="select* from PROMOTION";
+        String requeteListeLivre="select* from withdrawals";
         try{
             stmt=maConnexion.ObtenirConnexion().createStatement();
             ResultSet resultat= stmt.executeQuery(requeteListeLivre);
             while(resultat.next()){
-                model.addRow(new Object [] {resultat.getString("code"),resultat.getString("nom"),resultat.getString("prenom"), resultat.getString("sexe"),resultat.getString("nif"),
-                    resultat.getString("niveau"),resultat.getString("anposte"),resultat.getString("nposte"),resultat.getDate("datepromo"),resultat.getString("nsalaire")});
+                model.addRow(new Object [] {resultat.getString("produit_id"),resultat.getString("nom_produit"),resultat.getString("prix_vente"), resultat.getString("prix_vente_total"),resultat.getString("quantite_vendu"),
+                    resultat.getString("date_vente")});
             }
                 }catch(SQLException ex){
         System.out.println(ex);
@@ -72,7 +68,7 @@ public class ListePromotion extends javax.swing.JInternalFrame {
         setClosable(true);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Liste des promotions"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Liste des ventes"));
 
         TableEmp.setBackground(new java.awt.Color(204, 255, 204));
         TableEmp.setModel(new javax.swing.table.DefaultTableModel(
@@ -152,7 +148,7 @@ public class ListePromotion extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        MessageFormat header = new MessageFormat("Liste des promotions");
+        MessageFormat header = new MessageFormat("Liste des ventes");
         MessageFormat footer = new MessageFormat("Page{0,number,integer}");
         try {
             TableEmp.print(JTable.PrintMode.FIT_WIDTH, header, footer);
