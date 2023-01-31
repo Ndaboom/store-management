@@ -737,8 +737,8 @@ public class ProductHome extends javax.swing.JInternalFrame {
         
         try{
             java.sql.Statement stmt1=maConnexion.ObtenirConnexion().createStatement();
-            java.sql.ResultSet resultat= stmt1.executeQuery("SELECT * FROM products where product_name LIKE '" + jTSearch.getText().trim() + "%'");
-	    jTable1.setModel(DbUtils.resultSetToTableModel(resultat));
+            java.sql.ResultSet resultat= stmt1.executeQuery("SELECT * FROM products where nom LIKE '" + jTSearch.getText().trim() + "%'");
+            jTable1.setModel(DbUtils.resultSetToTableModel(resultat));
 	
           }catch(Exception e){
 	
