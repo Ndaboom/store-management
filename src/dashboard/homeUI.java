@@ -34,7 +34,6 @@ public class homeUI extends javax.swing.JFrame{
 	        jSeparator4 = new javax.swing.JPopupMenu.Separator();
 	        jMenuItem8 = new javax.swing.JMenuItem();
 	        jMenu5 = new javax.swing.JMenu();
-	        jMenu5.setEnabled(false);
 	        jMenu6 = new javax.swing.JMenu();
 
 	        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -155,6 +154,11 @@ public class homeUI extends javax.swing.JFrame{
 	        jMenu5.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 	        jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/divers 32.png"))); // NOI18N
 	        jMenu5.setText("Comptabilité");
+	        jMenu5.addMouseListener(new java.awt.event.MouseAdapter() {
+	            public void mouseClicked(java.awt.event.MouseEvent evt) {
+	                jMenu8MouseClicked(evt);
+	            }
+	        });
 	        jMenuBar1.add(jMenu5);
 
 	        jMenu6.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -183,7 +187,6 @@ public class homeUI extends javax.swing.JFrame{
 	        );
 
 	        jPAppli.getAccessibleContext().setAccessibleName("jPAppli");
-
 	        pack();	 
 	 }
 	 
@@ -219,6 +222,15 @@ public class homeUI extends javax.swing.JFrame{
 	        // TODO add your handling code here:
 	        System.exit(0);
 	    }//GEN-LAST:event_jMenu6MouseClicked
+	    
+	    private void jMenu8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu6MouseClicked
+	        // TODO add your handling code here:
+	    	AccountHome accountHome = new AccountHome();
+	        jPAppli.removeAll();
+	        jPAppli.repaint();
+	        jPAppli.add(accountHome);
+	        accountHome.show();
+	    }
 	    
 	    private void jMenu7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu6MouseClicked
 	        // TODO add your handling code here:

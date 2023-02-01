@@ -25,6 +25,9 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import net.proteanit.sql.DbUtils;
 import javax.swing.border.TitledBorder;
+
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+
 import javax.swing.border.EtchedBorder;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout;
@@ -76,6 +79,7 @@ public final class WithdrawalsHome extends javax.swing.JInternalFrame {
         initComponents();
         jCMedicaments.setEditable(false);
         jTId.setVisible(false);
+        AutoCompleteDecorator.decorate(jCMedicaments);
         //jTAvance.setEditable(true);
         
         setLocation(8,32);

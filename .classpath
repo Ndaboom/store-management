@@ -10,5 +10,6 @@
 	<classpathentry kind="lib" path="C:/Users/Sammy Ndabo/Documents/Eclipse/StoreManagement/other-files/jcalendar-1.3.3.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Sammy Ndabo/Documents/Eclipse/StoreManagement/other-files/mysql-connector-java-5.1.23-bin.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Sammy Ndabo/Documents/Eclipse/StoreManagement/other-files/rs2xml.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Sammy Ndabo/Documents/Eclipse/Java Libs/swingx-all-1.6.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
