@@ -141,13 +141,12 @@ public class homeUI extends javax.swing.JFrame{
 	        jMenu4.add(jSeparator4);
 
 	        jMenuItem8.setText("Liste sorties");
-	        jMenu4.add(jMenuItem8);
-	        
-	        jMenuItem8.addMouseListener(new java.awt.event.MouseAdapter() {
-	            public void mouseClicked(java.awt.event.MouseEvent evt) {
+	        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+	            public void actionPerformed(java.awt.event.ActionEvent evt) {
 	                jMenu7MouseClicked(evt);
 	            }
 	        });
+	        jMenu4.add(jMenuItem8);
 
 	        jMenuBar1.add(jMenu4);
 
@@ -232,13 +231,15 @@ public class homeUI extends javax.swing.JFrame{
 	        accountHome.show();
 	    }
 	    
-	    private void jMenu7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu6MouseClicked
+	    private void jMenu7MouseClicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu6MouseClicked
 	        // TODO add your handling code here:
-	    	WidthdrawalsList widthdraws = new WidthdrawalsList();
+	    	System.out.println("Trying to display withdrawalsList");
+	    	
+	    	WidthdrawalsList widthdrawsList = new WidthdrawalsList();
 	        jPAppli.removeAll();
 	        jPAppli.repaint();
-	        jPAppli.add(widthdraws);
-	        widthdraws.show();
+	        jPAppli.add(widthdrawsList);
+	        widthdrawsList.show();
 	    }//GEN-LAST:event_jMenu6MouseClicked
 
 	    private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed

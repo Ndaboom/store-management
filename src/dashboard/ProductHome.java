@@ -716,9 +716,7 @@ public class ProductHome extends javax.swing.JInternalFrame {
             System.err.println(ex);
         }
         }else{
-            JOptionPane.showMessageDialog(null, "Veuillez sélectionner un medicament!");
-      
-            
+            JOptionPane.showMessageDialog(null, "Veuillez sélectionner un medicament!"); 
         }
         
         product_name.setText("");

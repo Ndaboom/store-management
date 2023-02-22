@@ -38,11 +38,22 @@ public class AccountHome extends javax.swing.JInternalFrame {
     JLabel lblNewLabel_3 = new JLabel("0");
     JLabel lblNewLabel_5 = new JLabel("0");
     JLabel lblNewLabel_7 = new JLabel("0");
+    float PAT, PVT, Profits,Tithes;
     
     public AccountHome() {
         initComponents();
         setLocation(8,32);
-        DefaultTableModel model=new DefaultTableModel();
+        getProfitsAndTithes();
+        InitialialData();
+        
+//        Date date = new Date();
+//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+//        String str = formatter.format(date);
+//        System.out.print(str);
+    }
+    
+    private void InitialialData() {
+    	DefaultTableModel model=new DefaultTableModel();
         model.addColumn("ID Produit");
         model.addColumn("Nom");        
         model.addColumn("Prix vente");
@@ -50,13 +61,7 @@ public class AccountHome extends javax.swing.JInternalFrame {
         model.addColumn("Quantite vendu");
         model.addColumn("Date vente");
         
-        Date date = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        String str = formatter.format(date);
-        System.out.print(str);
-
-        String requeteListeLivre="select * from withdrawals WHERE date_vente = '"+str+"'";
-        System.out.print(requeteListeLivre);
+    	String requeteListeLivre="select * from withdrawals";
         try{
             stmt=maConnexion.ObtenirConnexion().createStatement();
             ResultSet resultat= stmt.executeQuery(requeteListeLivre);
@@ -65,16 +70,16 @@ public class AccountHome extends javax.swing.JInternalFrame {
                     resultat.getString("date_vente")});
             }
         }catch(SQLException ex){
-        System.out.println(ex);
+        	System.out.println(ex);
         }
-        TableEmp.setModel(model);
+        //TableEmp.setModel(model);
         // Fetch total of incomes
         try{
 
-            java.sql.Statement stmt1= maConnexion.ObtenirConnexion().createStatement();
-            java.sql.ResultSet resultat= stmt1.executeQuery("SELECT ROUND(SUM(prix_vente_total),2) FROM withdrawals WHERE date_vente = '"+str+"'");
+            java.sql.Statement stmt1 = maConnexion.ObtenirConnexion().createStatement();
+            java.sql.ResultSet resultat = stmt1.executeQuery("SELECT ROUND(SUM(prix_vente_total),2) FROM withdrawals");
 	        while(resultat.next()) {
-	        	lblNewLabel_3.setText(resultat.getString(1)+ " $");
+	        	lblNewLabel_3.setText(resultat.getFloat(1)+ " $");
 	        }
 	
        }catch(Exception e){
@@ -116,6 +121,28 @@ public class AccountHome extends javax.swing.JInternalFrame {
        }catch(Exception e){
     	   JOptionPane.showMessageDialog(null,"Error loading total incomes"+ e.toString());
        }
+        
+        // Fetch profits and tithes 
+        
+		try{
+
+            java.sql.Statement stmt1= maConnexion.ObtenirConnexion().createStatement();
+            java.sql.ResultSet resultat= stmt1.executeQuery("SELECT * FROM withdrawals where date_vente >= '"+input1+"' AND date_vente <= '"+input2+"'");
+            
+            while(resultat.next()) {
+	        	PVT = resultat.getFloat(1);
+	        	Profits = (resultat.getFloat("prix_vente") - resultat.getFloat("PA")) * resultat.getFloat("quantite_vendu");
+	        }
+            
+            Tithes = Profits/10;
+            
+            lblNewLabel_5.setText(Profits+ " $");
+            lblNewLabel_7.setText(Tithes+" $");
+            
+	
+        }catch(Exception e){
+    	   JOptionPane.showMessageDialog(null,"Error loading total incomes"+ e.toString());
+        }
         
        
     }
@@ -223,24 +250,24 @@ public class AccountHome extends javax.swing.JInternalFrame {
         			.addPreferredGap(ComponentPlacement.UNRELATED)
         			.addGroup(jPanel2Layout.createParallelGroup(Alignment.LEADING)
         				.addGroup(jPanel2Layout.createSequentialGroup()
-        					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
-        					.addGap(39)
+        					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 71, GroupLayout.PREFERRED_SIZE)
+        					.addPreferredGap(ComponentPlacement.UNRELATED)
         					.addComponent(jDateChooser1, GroupLayout.PREFERRED_SIZE, 143, GroupLayout.PREFERRED_SIZE)
         					.addGap(47)
-        					.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
-        					.addGap(40)
+        					.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE)
+        					.addPreferredGap(ComponentPlacement.UNRELATED)
         					.addComponent(jDateChooser2, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE))
         				.addGroup(jPanel2Layout.createSequentialGroup()
         					.addComponent(lblNewLabel_3, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE)
         					.addPreferredGap(ComponentPlacement.RELATED)
         					.addComponent(lblNewLabel_4, GroupLayout.PREFERRED_SIZE, 58, GroupLayout.PREFERRED_SIZE)
         					.addGap(18)
-        					.addComponent(lblNewLabel_5, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
-        					.addGap(29)
+        					.addComponent(lblNewLabel_5, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)
+        					.addGap(18)
         					.addComponent(lblNewLabel_6, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE)
         					.addGap(18)
-        					.addComponent(lblNewLabel_7, GroupLayout.PREFERRED_SIZE, 57, GroupLayout.PREFERRED_SIZE)))
-        			.addContainerGap(84, Short.MAX_VALUE))
+        					.addComponent(lblNewLabel_7, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE)))
+        			.addContainerGap(64, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
         	jPanel2Layout.createParallelGroup(Alignment.LEADING)
@@ -250,10 +277,10 @@ public class AccountHome extends javax.swing.JInternalFrame {
         					.addComponent(jButton1)
         					.addComponent(lblNewLabel))
         				.addComponent(jDateChooser1, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(jDateChooser2, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
         				.addGroup(jPanel2Layout.createSequentialGroup()
         					.addContainerGap()
-        					.addComponent(lblNewLabel_1))
-        				.addComponent(jDateChooser2, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE))
+        					.addComponent(lblNewLabel_1)))
         			.addGap(27)
         			.addGroup(jPanel2Layout.createParallelGroup(Alignment.BASELINE)
         				.addComponent(lblNewLabel_2)
@@ -262,7 +289,7 @@ public class AccountHome extends javax.swing.JInternalFrame {
         				.addComponent(lblNewLabel_6)
         				.addComponent(lblNewLabel_5)
         				.addComponent(lblNewLabel_4))
-        			.addContainerGap(90, Short.MAX_VALUE))
+        			.addContainerGap(110, Short.MAX_VALUE))
         );
         jPanel2.setLayout(jPanel2Layout);
 
@@ -316,6 +343,29 @@ public class AccountHome extends javax.swing.JInternalFrame {
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed
+    
+    public void getProfitsAndTithes() {
+		System.out.println("Get profitsAndTithes function called");
+		try{
+
+            java.sql.Statement stmt1= maConnexion.ObtenirConnexion().createStatement();
+            java.sql.ResultSet resultat= stmt1.executeQuery("SELECT * FROM withdrawals");
+            
+            while(resultat.next()) {
+	        	PVT = resultat.getFloat(1);
+	        	Profits = (resultat.getFloat("prix_vente") - resultat.getFloat("PA")) * resultat.getFloat("quantite_vendu");
+	        }
+            
+            Tithes = Profits/10;
+            
+            lblNewLabel_5.setText(Profits+ " $");
+            lblNewLabel_7.setText(Tithes+" $");
+            
+	
+        }catch(Exception e){
+    	   JOptionPane.showMessageDialog(null,"Error loading total incomes"+ e.toString());
+        }
+	}
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

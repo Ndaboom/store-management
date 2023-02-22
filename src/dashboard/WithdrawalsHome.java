@@ -9,6 +9,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.HeadlessException;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
@@ -32,10 +34,13 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 /**
  *
  * @author MyLau
+ * @updated by Sam
  */
 @SuppressWarnings("serial")
 public final class WithdrawalsHome extends javax.swing.JInternalFrame {
@@ -44,9 +49,10 @@ public final class WithdrawalsHome extends javax.swing.JInternalFrame {
      * Creates new form WithdrawalsHome
      */
     public boolean dataStatu;
-    public String selected_product;
+    public String selected_product, table1_click;
     public int selected_product_id;
     public int selected_product_quantity;
+    public float PAU, PV;
     public void getData(){
         try{
 
@@ -187,8 +193,65 @@ public final class WithdrawalsHome extends javax.swing.JInternalFrame {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCSexeActionPerformed(evt);
                 selected_product = jCMedicaments.getSelectedItem().toString();
+                
+                // Fecth PA Based on the selected product
+                
+                try{
+
+		            java.sql.Statement stmt1= maConnexion.ObtenirConnexion().createStatement();
+		            java.sql.ResultSet resultat= stmt1.executeQuery("SELECT PV,PAU FROM products WHERE nom ='"+selected_product+"'");
+			        
+		            PAU = 0;
+		 
+		            while(resultat.next()) {
+			        	PAU = resultat.getFloat("PAU");
+			        	PV = resultat.getFloat("PV");
+			        }
+		            
+		            textPAField.setText(PAU+ " ");
+		            jTPrixVente.setText(PV+" ");
+		            
+			
+		        }catch(Exception e1){
+		    	   JOptionPane.showMessageDialog(null,"Error loading total incomes"+ e1.toString());
+		        }
+                
+                // Fetch PA Based on the selected product
             }
         });
+        
+        /**
+         * 
+         * comboBox_1_1.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				// TODO Auto-generated method stub
+				
+				try{
+
+		            java.sql.Statement stmt1= maConnexion.ObtenirConnexion().createStatement();
+		            java.sql.ResultSet resultat= stmt1.executeQuery("SELECT * FROM evaluations_record WHERE lecturer_name ='"+comboBox_1_1.getSelectedItem().toString()+"'");
+			        
+		            
+		            float row_count = 0, average;
+		            
+		            while(resultat.next()) {
+			        	row_count = row_count+1;
+			        }
+		            
+		            average = marksSum / row_count;
+		            
+		            lblNewLabel_9_1.setText(average+ " %");
+		            
+			
+		        }catch(Exception e1){
+		    	   JOptionPane.showMessageDialog(null,"Error loading total incomes"+ e1.toString());
+		        }
+				
+			}
+		});
+         * 
+         */
 
         jLNiveauEtude.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLNiveauEtude.setForeground(new java.awt.Color(255, 102, 102));
@@ -199,20 +262,35 @@ public final class WithdrawalsHome extends javax.swing.JInternalFrame {
                 jTSalaireActionPerformed(evt);
             }
         });
+        
+        JLabel lblPa = new JLabel();
+        lblPa.setText("P.A");
+        lblPa.setForeground(new Color(255, 102, 102));
+        lblPa.setFont(new Font("Tahoma", Font.BOLD, 12));
+        
+        textPAField = new JTextField();
+        textPAField.setEditable(false);
+        textPAField.setText(" ");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2Layout.setHorizontalGroup(
         	jPanel2Layout.createParallelGroup(Alignment.LEADING)
         		.addGroup(jPanel2Layout.createSequentialGroup()
         			.addGroup(jPanel2Layout.createParallelGroup(Alignment.LEADING)
-        				.addComponent(jLProduct, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
-        				.addComponent(jLNIF)
-        				.addComponent(jLNiveauEtude))
-        			.addGap(49)
-        			.addGroup(jPanel2Layout.createParallelGroup(Alignment.LEADING)
-        				.addComponent(jTQuantiteVendu, GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
-        				.addComponent(jTPrixVente, GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
-        				.addComponent(jCMedicaments, 0, 135, Short.MAX_VALUE))
+        				.addGroup(jPanel2Layout.createSequentialGroup()
+        					.addGroup(jPanel2Layout.createParallelGroup(Alignment.LEADING)
+        						.addComponent(jLProduct, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
+        						.addComponent(jLNIF)
+        						.addComponent(jLNiveauEtude))
+        					.addGap(49)
+        					.addGroup(jPanel2Layout.createParallelGroup(Alignment.LEADING)
+        						.addComponent(jTQuantiteVendu, GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
+        						.addComponent(jTPrixVente, GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
+        						.addComponent(jCMedicaments, 0, 135, Short.MAX_VALUE)))
+        				.addGroup(jPanel2Layout.createSequentialGroup()
+        					.addComponent(lblPa, GroupLayout.PREFERRED_SIZE, 96, GroupLayout.PREFERRED_SIZE)
+        					.addGap(49)
+        					.addComponent(textPAField, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE)))
         			.addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -230,7 +308,13 @@ public final class WithdrawalsHome extends javax.swing.JInternalFrame {
         			.addGroup(jPanel2Layout.createParallelGroup(Alignment.BASELINE)
         				.addComponent(jLNiveauEtude, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
         				.addComponent(jTQuantiteVendu, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-        			.addContainerGap(90, Short.MAX_VALUE))
+        			.addGap(18)
+        			.addGroup(jPanel2Layout.createParallelGroup(Alignment.LEADING)
+        				.addComponent(lblPa, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
+        				.addGroup(jPanel2Layout.createSequentialGroup()
+        					.addGap(3)
+        					.addComponent(textPAField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+        			.addContainerGap(191, Short.MAX_VALUE))
         );
         jPanel2.setLayout(jPanel2Layout);
 
@@ -425,7 +509,8 @@ public final class WithdrawalsHome extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTAposteActionPerformed
 
-    private void jTAposteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTAposteKeyTyped
+    @SuppressWarnings("unused")
+	private void jTAposteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTAposteKeyTyped
         // TODO add your handling code here:
         char c=evt.getKeyChar();
         if(Character.isDigit(c) || (c==KeyEvent.VK_BACK_SPACE) || c==KeyEvent.VK_DELETE){
@@ -466,9 +551,10 @@ public final class WithdrawalsHome extends javax.swing.JInternalFrame {
         	int remaining_quantity = selected_product_quantity - Integer.parseInt(quantite_vendu_recup);
         	float total_sold = Float.parseFloat(prix_vente_recup) * Float.parseFloat(quantite_vendu_recup);
         	String strNumber = Float.toString(total_sold);
+    
             try{
         
-            String requete="INSERT INTO withdrawals(produit_id,nom_produit,prix_vente,prix_vente_total,quantite_vendu)value ('"+selected_product_id+"','"+product_name_recup+"','"+prix_vente_recup+"','"+strNumber+"','"+quantite_vendu_recup+"')";
+            String requete="INSERT INTO withdrawals(produit_id,nom_produit,prix_vente,prix_vente_total,quantite_vendu,PA)value ('"+selected_product_id+"','"+product_name_recup+"','"+prix_vente_recup+"','"+strNumber+"','"+quantite_vendu_recup+"','"+PAU+"')";
             stmt=maConnexion.ObtenirConnexion().createStatement();
             stmt.executeUpdate(requete);
             
@@ -525,6 +611,7 @@ public final class WithdrawalsHome extends javax.swing.JInternalFrame {
         jTPrixVente.setText("");
         jTQuantiteVendu.setText("");
         jCMedicaments.setSelectedIndex(0);
+        textPAField.setText("");
         
         getData();
      
@@ -538,39 +625,48 @@ public final class WithdrawalsHome extends javax.swing.JInternalFrame {
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
         dataStatu=false;
+        System.out.print("Table clicked");
         try{
+        	
             int row=jTable1.getSelectedRow();
-            String table1_click=(jTable1.getModel().getValueAt(row,0).toString());
+            table1_click=(jTable1.getModel().getValueAt(row,0).toString());
+            System.out.print("Table clicked "+table1_click);
             java.sql.Statement stmt1= maConnexion.ObtenirConnexion().createStatement();
-            java.sql.ResultSet resultat= stmt1.executeQuery("SELECT * withdrawals AVANCE WHERE id ='"+table1_click+"'");
+            java.sql.ResultSet resultat= stmt1.executeQuery("SELECT * FROM withdrawals WHERE id ='"+table1_click+"'");
 
             if(resultat.next()){
                 jCMedicaments.setSelectedItem(resultat.getString("nom_produit"));                
                 jTPrixVente.setText(resultat.getString("prix_vente"));
                 jTQuantiteVendu.setText(resultat.getString("quantite_vendu"));
+                textPAField.setText(resultat.getString("PA"));
             }
 
         }catch(SQLException e){
-
+        	System.out.print(e);
         }
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jSupprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSupprimerActionPerformed
         // TODO add your handling code here:
-        String requete="DELETE FROM AVANCE WHERE code='"+jTId.getText()+"'";
-        try{
-            stmt = maConnexion.ObtenirConnexion().createStatement();
-            stmt.executeUpdate(requete);
-            JOptionPane.showMessageDialog(null, "Suppresion réussie!");          
-      }                                           
-      catch(SQLException ex){
-            System.err.println(ex);
-      }
-       
-        jCMedicaments.setSelectedItem("Masculin");
-        jTPrixVente.setText("");
-        jTQuantiteVendu.setText(""); 
-        getData();
+    	if(table1_click != "") {
+    		String requete="DELETE FROM withdrawals WHERE id='"+table1_click+"'";
+            try{
+                stmt = maConnexion.ObtenirConnexion().createStatement();
+                stmt.executeUpdate(requete);
+                JOptionPane.showMessageDialog(null, "Suppresion réussie!");          
+          }                                           
+          catch(SQLException ex){
+                System.err.println(ex);
+          }
+           
+            jTPrixVente.setText("");
+            jTQuantiteVendu.setText("");
+            jCMedicaments.setSelectedIndex(0);
+            textPAField.setText("");
+            getData();
+    	}else {
+    		JOptionPane.showMessageDialog(null, "Please select a record first!");
+    	}
     }//GEN-LAST:event_jSupprimerActionPerformed
 
     private void jTSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTSearchKeyReleased
@@ -716,4 +812,5 @@ if(doPrint) {
     private javax.swing.JTextField jTPrixVente;
     private javax.swing.JTextField jTSearch;
     private javax.swing.JTable jTable1;
+    private JTextField textPAField;
 }
