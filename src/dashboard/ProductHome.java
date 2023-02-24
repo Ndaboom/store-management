@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.HeadlessException;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
@@ -32,6 +33,10 @@ import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import java.awt.Dimension;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -43,7 +48,7 @@ public class ProductHome extends javax.swing.JInternalFrame {
      * Creates new form EmployeHome
      */
     
-    public boolean dataStatu;
+    public boolean dataStatu, alphaTri, expTri;
     public int row;
     String table1_click;
 
@@ -335,6 +340,18 @@ public class ProductHome extends javax.swing.JInternalFrame {
                 jBValiderActionPerformed(evt);
             }
         });
+        
+        btnDateExp = new JButton();
+        btnDateExp.setIcon(new ImageIcon(ProductHome.class.getResource("/Image/all_new.png")));
+        btnDateExp.setToolTipText("Trier par date d'expiration");
+        btnDateExp.setText("Date exp");
+        btnDateExp.setMinimumSize(new Dimension(101, 23));
+        btnDateExp.setMaximumSize(new Dimension(101, 23));
+        btnDateExp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	jExpTriKeyReleased(evt);
+            }
+        });
 
         jBVider.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/new_user.png"))); // NOI18N
         jBVider.setText("Nouveau");
@@ -446,25 +463,25 @@ public class ProductHome extends javax.swing.JInternalFrame {
         jLTel1.setText("Entrer le nom");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(122, 122, 122)
-                .addComponent(jLTel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(119, 119, 119)
-                .addComponent(jTSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(138, 138, 138))
+        	jPanel7Layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+        			.addContainerGap()
+        			.addComponent(jLTel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        			.addGap(29)
+        			.addComponent(jTSearch, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)
+        			.addGap(302))
         );
         jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLTel1))
-                .addGap(28, 28, 28))
+        	jPanel7Layout.createParallelGroup(Alignment.TRAILING)
+        		.addGroup(jPanel7Layout.createSequentialGroup()
+        			.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        			.addGroup(jPanel7Layout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(jLTel1)
+        				.addComponent(jTSearch, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+        			.addGap(28))
         );
+        jPanel7.setLayout(jPanel7Layout);
         
         lblNewLabel_1 = new JLabel("Total PAT :");
         
@@ -479,6 +496,42 @@ public class ProductHome extends javax.swing.JInternalFrame {
         pvt_displayer.setFont(new Font("Tahoma", Font.BOLD, 14));
         
         lblNewLabel_4 = new JLabel("$");
+        
+        JPanel jPanel7_1 = new JPanel();
+        jPanel7_1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Tri", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+        jPanel7_1.setBackground(new Color(204, 255, 204));
+        
+        JButton btnOrdreAplha = new JButton();
+        btnOrdreAplha.setIcon(new ImageIcon(ProductHome.class.getResource("/Image/all_new.png")));
+        btnOrdreAplha.setToolTipText("Reinitializer les champs");
+        btnOrdreAplha.setText("Ordre aplha");
+        btnOrdreAplha.setMinimumSize(new Dimension(101, 23));
+        btnOrdreAplha.setMaximumSize(new Dimension(101, 23));
+        btnOrdreAplha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	jAlphaTriKeyReleased(evt);
+            }
+        });
+        GroupLayout gl_jPanel7_1 = new GroupLayout(jPanel7_1);
+        gl_jPanel7_1.setHorizontalGroup(
+        	gl_jPanel7_1.createParallelGroup(Alignment.LEADING)
+        		.addGroup(gl_jPanel7_1.createSequentialGroup()
+        			.addContainerGap()
+        			.addComponent(btnDateExp, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE)
+        			.addGap(18)
+        			.addComponent(btnOrdreAplha, GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
+        			.addContainerGap())
+        );
+        gl_jPanel7_1.setVerticalGroup(
+        	gl_jPanel7_1.createParallelGroup(Alignment.TRAILING)
+        		.addGroup(Alignment.LEADING, gl_jPanel7_1.createSequentialGroup()
+        			.addContainerGap()
+        			.addGroup(gl_jPanel7_1.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(btnDateExp, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(btnOrdreAplha, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+        			.addContainerGap(28, Short.MAX_VALUE))
+        );
+        jPanel7_1.setLayout(gl_jPanel7_1);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6Layout.setHorizontalGroup(
@@ -488,8 +541,10 @@ public class ProductHome extends javax.swing.JInternalFrame {
         			.addGroup(jPanel6Layout.createParallelGroup(Alignment.LEADING)
         				.addGroup(jPanel6Layout.createSequentialGroup()
         					.addComponent(jPanel5, GroupLayout.DEFAULT_SIZE, 632, Short.MAX_VALUE)
-        					.addPreferredGap(ComponentPlacement.RELATED)
-        					.addComponent(jPanel7, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+        					.addGap(18)
+        					.addComponent(jPanel7_1, GroupLayout.PREFERRED_SIZE, 274, GroupLayout.PREFERRED_SIZE)
+        					.addGap(18)
+        					.addComponent(jPanel7, GroupLayout.PREFERRED_SIZE, 264, GroupLayout.PREFERRED_SIZE))
         				.addGroup(jPanel6Layout.createSequentialGroup()
         					.addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
         					.addGap(18)
@@ -526,9 +581,11 @@ public class ProductHome extends javax.swing.JInternalFrame {
         						.addComponent(lblNewLabel_4)))
         				.addComponent(jPanel2, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 453, Short.MAX_VALUE))
         			.addGap(18)
-        			.addGroup(jPanel6Layout.createParallelGroup(Alignment.LEADING, false)
+        			.addGroup(jPanel6Layout.createParallelGroup(Alignment.LEADING)
         				.addComponent(jPanel5, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE)
-        				.addComponent(jPanel7, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE)))
+        				.addComponent(jPanel7, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(jPanel7_1, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE))
+        			.addGap(51))
         );
         jPanel6.setLayout(jPanel6Layout);
 
@@ -741,13 +798,64 @@ public class ProductHome extends javax.swing.JInternalFrame {
 	
 	
           }
-        
     }//GEN-LAST:event_jTSearchKeyReleased
+    
+    private void jAlphaTriKeyReleased(ActionEvent evt) {
+    	 dataStatu=false;
+    	 alphaTri = !alphaTri;
+         System.out.print("Tri par date date d'expiration");
+         if(alphaTri) {
+        	 try{
+                 java.sql.Statement stmt1=maConnexion.ObtenirConnexion().createStatement();
+                 java.sql.ResultSet resultat= stmt1.executeQuery("SELECT * FROM products order by date_expiration asc");
+                 jTable1.setModel(DbUtils.resultSetToTableModel(resultat));
+     	
+               }catch(Exception e){
+            	   System.out.print(e);
+               } 
+         }else {
+        	 
+        	 try{
+                 java.sql.Statement stmt1=maConnexion.ObtenirConnexion().createStatement();
+                 java.sql.ResultSet resultat= stmt1.executeQuery("SELECT * FROM products order by date_expiration desc");
+                 jTable1.setModel(DbUtils.resultSetToTableModel(resultat));
+     	
+               }catch(Exception e){  
+            	   System.out.print(e);
+               }
+        	 
+         }
+    }
+    
+    private void jExpTriKeyReleased(ActionEvent evt) {
+    	 dataStatu=false;
+    	 expTri = !expTri;
+         System.out.print("Tri par date d'expiration");
+         if(expTri) {
+        	 try{
+                 java.sql.Statement stmt1=maConnexion.ObtenirConnexion().createStatement();
+                 java.sql.ResultSet resultat= stmt1.executeQuery("SELECT * FROM products order by date_expiration asc");
+                 jTable1.setModel(DbUtils.resultSetToTableModel(resultat));
+     	
+               }catch(Exception e){
+            	   System.out.print(e);
+               } 
+         }else { 
+        	 try{
+                 java.sql.Statement stmt1=maConnexion.ObtenirConnexion().createStatement();
+                 java.sql.ResultSet resultat= stmt1.executeQuery("SELECT * FROM products order by date_expiration desc");
+                 jTable1.setModel(DbUtils.resultSetToTableModel(resultat));
+     	
+               }catch(Exception e){
+            	   System.out.print(e);
+               }	 
+         }   
+    }
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        final String daterecup=sdf.format(product_expiry_date.getDate());
+        final String daterecup = sdf.format(product_expiry_date.getDate());
         
         if(product_name.getText().trim().length()>0 && product_price.getText().trim().length()>0){
         PrinterJob job = PrinterJob.getPrinterJob();
@@ -855,7 +963,7 @@ if(doPrint) {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton jSupprimer;
+    private javax.swing.JButton jSupprimer, btnDateExp;
     private com.toedter.calendar.JDateChooser product_expiry_date;
     private javax.swing.JTextField product_name;
     private javax.swing.JTextField jTSearch;
