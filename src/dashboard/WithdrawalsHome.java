@@ -53,6 +53,7 @@ public final class WithdrawalsHome extends javax.swing.JInternalFrame {
     public int selected_product_id;
     public int selected_product_quantity;
     public float PAU, PV;
+    
     public void getData(){
         try{
 

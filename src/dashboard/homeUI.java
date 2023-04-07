@@ -1,9 +1,14 @@
 package dashboard;
 
+import java.sql.Statement;
+
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
+import auth.Connexion;
 import dashboard.homeUI;
+import net.proteanit.sql.DbUtils;
+import utils.Helpers;
 
 public class homeUI extends javax.swing.JFrame{
 	
@@ -11,6 +16,7 @@ public class homeUI extends javax.swing.JFrame{
 	     initComponents();
 	     this.setIconImage(new ImageIcon(getClass().getResource("icone_jar.png")).getImage());
 	     setExtendedState(JFrame.MAXIMIZED_BOTH);
+	     checkForExpiredProducts();
 	     // setAlwaysOnTop(true);
 	       
 	 }
@@ -189,6 +195,29 @@ public class homeUI extends javax.swing.JFrame{
 	        pack();	 
 	 }
 	 
+	 public void checkForExpiredProducts() {
+		 try{
+	            java.sql.Statement stmt1= maConnexion.ObtenirConnexion().createStatement();
+	            java.sql.ResultSet resultat= stmt1.executeQuery("SELECT * FROM `products` WHERE date_expiration >= CURDATE()");
+	            
+	            // Look for products that expire in the next 30 days
+	            java.sql.Statement stmt2 = maConnexion.ObtenirConnexion().createStatement();
+	            java.sql.ResultSet resultat2 = stmt2.executeQuery("SELECT * FROM `products` WHERE date_expiration BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 30 DAY)");
+	            
+	            if(resultat.next() || resultat2.next()) {
+	            	Helpers helpers = new Helpers();
+	            	helpers.displayTray("Alert", "Certains de vos produits expirent...");
+	            	ProductExpired expiredFrame = new ProductExpired();
+	            	expiredFrame.setVisible(true);
+	            	expiredFrame.setLocationRelativeTo(null);
+	            	expiredFrame.setAlwaysOnTop(true);
+	            }
+	            
+	       }catch(Exception e){
+		
+	       }
+	 }
+	 
 	 private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
 	        // TODO add your handling code here:
 	        ProductHome addEmp=new ProductHome();
@@ -340,4 +369,6 @@ public class homeUI extends javax.swing.JFrame{
 	    private javax.swing.JPopupMenu.Separator jSeparator3;
 	    private javax.swing.JPopupMenu.Separator jSeparator4;
 	    // End of variables declaration//GEN-END:variables
+	    Statement stmt;
+	    Connexion maConnexion= new Connexion();
 }

@@ -197,16 +197,16 @@ public class ProductHome extends javax.swing.JInternalFrame {
         jLPoste.setText("Date d'expiration");
         product_expiry_date = new com.toedter.calendar.JDateChooser();
         
-                product_expiry_date.setDateFormatString("yyyy-MM-dd");
-                product_expiry_date.setMinSelectableDate(new java.util.Date(-2208967355000L));
+        product_expiry_date.setDateFormatString("yyyy-MM-dd");
+        product_expiry_date.setMinSelectableDate(new java.util.Date(-2208967355000L));
         jLDateEmb = new javax.swing.JLabel();
         
-                jLDateEmb.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-                jLDateEmb.setForeground(new java.awt.Color(255, 102, 102));
-                jLDateEmb.setText("Status");
+        jLDateEmb.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLDateEmb.setForeground(new java.awt.Color(255, 102, 102));
+        jLDateEmb.setText("Status");
+                
         product_status = new javax.swing.JComboBox();
-        
-                product_status.setModel(new DefaultComboBoxModel(new String[] {"Active", "Non active"}));
+        product_status.setModel(new DefaultComboBoxModel(new String[] {"Active", "Non active"}));
         
         JLabel lblUnit = new JLabel();
         lblUnit.setText("Unites");
@@ -803,7 +803,7 @@ public class ProductHome extends javax.swing.JInternalFrame {
     private void jAlphaTriKeyReleased(ActionEvent evt) {
     	 dataStatu=false;
     	 alphaTri = !alphaTri;
-         System.out.print("Tri par date date d'expiration");
+         System.out.print("\nTri par ordre alphabetique");
          if(alphaTri) {
         	 try{
                  java.sql.Statement stmt1=maConnexion.ObtenirConnexion().createStatement();
@@ -811,26 +811,26 @@ public class ProductHome extends javax.swing.JInternalFrame {
                  jTable1.setModel(DbUtils.resultSetToTableModel(resultat));
      	
                }catch(Exception e){
-            	   System.out.print(e);
+            	 System.out.print(e);
                } 
          }else {
         	 
         	 try{
+        		 
                  java.sql.Statement stmt1=maConnexion.ObtenirConnexion().createStatement();
                  java.sql.ResultSet resultat= stmt1.executeQuery("SELECT * FROM products order by date_expiration desc");
                  jTable1.setModel(DbUtils.resultSetToTableModel(resultat));
      	
                }catch(Exception e){  
-            	   System.out.print(e);
-               }
-        	 
+            	 System.out.print(e);
+               } 
          }
     }
     
     private void jExpTriKeyReleased(ActionEvent evt) {
     	 dataStatu=false;
     	 expTri = !expTri;
-         System.out.print("Tri par date d'expiration");
+         System.out.print("\nTri par date d'expiration");
          if(expTri) {
         	 try{
                  java.sql.Statement stmt1=maConnexion.ObtenirConnexion().createStatement();
