@@ -807,18 +807,18 @@ public class ProductHome extends javax.swing.JInternalFrame {
          if(alphaTri) {
         	 try{
                  java.sql.Statement stmt1=maConnexion.ObtenirConnexion().createStatement();
-                 java.sql.ResultSet resultat= stmt1.executeQuery("SELECT * FROM products order by date_expiration asc");
+                 java.sql.ResultSet resultat= stmt1.executeQuery("SELECT * FROM products order by name asc");
                  jTable1.setModel(DbUtils.resultSetToTableModel(resultat));
      	
                }catch(Exception e){
             	 System.out.print(e);
                } 
-         }else {
+         } else {
         	 
         	 try{
         		 
                  java.sql.Statement stmt1=maConnexion.ObtenirConnexion().createStatement();
-                 java.sql.ResultSet resultat= stmt1.executeQuery("SELECT * FROM products order by date_expiration desc");
+                 java.sql.ResultSet resultat= stmt1.executeQuery("SELECT * FROM products order by name desc");
                  jTable1.setModel(DbUtils.resultSetToTableModel(resultat));
      	
                }catch(Exception e){  
