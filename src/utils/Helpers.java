@@ -11,6 +11,9 @@ import java.awt.*;
 import java.awt.TrayIcon.MessageType;
 import java.net.MalformedURLException;
 
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+
 
 public class Helpers {
 	// Pop System Notification
@@ -32,4 +35,16 @@ public class Helpers {
 
         trayIcon.displayMessage(notificationTitle, notificationContent, MessageType.INFO);
     }
+	
+	public int displayJOptionPane(String dialogContent) {
+		 JOptionPane pane = new JOptionPane(dialogContent);
+		 @SuppressWarnings("static-access")
+		int d = pane.showConfirmDialog(null, null, dialogContent,
+			      JOptionPane.YES_NO_CANCEL_OPTION,
+			      JOptionPane.PLAIN_MESSAGE, null);
+		 pane.setLocation(10,10);
+		 pane.setVisible(true);
+		 
+		 return d;
+	}
 }

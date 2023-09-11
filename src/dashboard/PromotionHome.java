@@ -642,10 +642,10 @@ public class PromotionHome extends javax.swing.JInternalFrame {
                 
                 
             }
-        }
-      catch(SQLException ex){
+        }catch(SQLException ex){
             System.err.println(ex);
-        }}else{
+        }
+      }else{
             String requete2="UPDATE EMPLOYE  SET  poste='"+nPoste+"', "
                  + "salaire='"+salairerecup+"' where nif='"+jFTNIF.getText()+"'";
 

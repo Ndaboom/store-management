@@ -24,6 +24,8 @@ import javax.swing.SwingUtilities;
 
 import auth.Connexion;
 import net.proteanit.sql.DbUtils;
+import utils.Helpers;
+
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -103,6 +105,7 @@ public class ProductHome extends javax.swing.JInternalFrame {
         getData();
         getPATSum();
         getPVTSum();
+        checkForExpiredProducts();
         dataStatu= true;
          SwingUtilities.invokeLater(new Runnable() {
       @Override
@@ -704,6 +707,28 @@ public class ProductHome extends javax.swing.JInternalFrame {
         }   
        
     }//GEN-LAST:event_jBValiderActionPerformed
+    
+    public void checkForExpiredProducts() {
+		 try{
+	            java.sql.Statement stmt1= maConnexion.ObtenirConnexion().createStatement();
+	            java.sql.ResultSet resultat= stmt1.executeQuery("SELECT * FROM `products` WHERE date_expiration >= CURDATE()");
+	            
+	            // Look for products that expire in the next 30 days
+	            java.sql.Statement stmt2 = maConnexion.ObtenirConnexion().createStatement();
+	            java.sql.ResultSet resultat2 = stmt2.executeQuery("SELECT * FROM `products` WHERE date_expiration BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 30 DAY)");
+	            
+	            if(resultat.next() || resultat2.next()) {
+	            	Helpers helpers = new Helpers();
+	            	helpers.displayTray("Alert", "Certains de vos produits expirent...");
+	            	ProductExpired expiredFrame = new ProductExpired();
+	            	expiredFrame.setVisible(true);
+	            	expiredFrame.setLocationRelativeTo(null);
+	            }
+	            
+	       }catch(Exception e){
+		
+	       }
+	 }
 
     private void jBViderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBViderActionPerformed
         // TODO add your handling code here:
@@ -728,16 +753,15 @@ public class ProductHome extends javax.swing.JInternalFrame {
 
     private void jBQuitterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBQuitterActionPerformed
         // TODO add your handling code here:
-        dispose();
-        
+        dispose();    
     }//GEN-LAST:event_jBQuitterActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
         dataStatu=false;
         try{
-            row =jTable1.getSelectedRow();
-            table1_click=(jTable1.getModel().getValueAt(row,0).toString());
+            row = jTable1.getSelectedRow();
+            table1_click= (jTable1.getModel().getValueAt(row,0).toString());
             java.sql.Statement stmt1=maConnexion.ObtenirConnexion().createStatement();
             java.sql.ResultSet resultat= stmt1.executeQuery("SELECT * FROM products WHERE id='"+table1_click+"'");
 
@@ -768,8 +792,8 @@ public class ProductHome extends javax.swing.JInternalFrame {
             stmt=maConnexion.ObtenirConnexion().createStatement();
             stmt.executeUpdate(requete);
             JOptionPane.showMessageDialog(null, "Suppresion réussie!");         
-      }                                           
-      catch(SQLException ex){
+        }                                           
+        catch(SQLException ex){
             System.err.println(ex);
         }
         }else{
@@ -782,6 +806,7 @@ public class ProductHome extends javax.swing.JInternalFrame {
         product_status.setSelectedItem("Active");
         product_expiry_date.setDate(new Date());
         getData();
+        
     }//GEN-LAST:event_jSupprimerActionPerformed
 
     private void jTSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTSearchKeyReleased
@@ -892,39 +917,6 @@ public class ProductHome extends javax.swing.JInternalFrame {
         
         graphics.drawString(" *Secteur", 130, 140);
         graphics.drawString((String) product_sector.getSelectedItem(), 350, 140);
-        
-//        graphics.drawString(" *Date Naissance", 130, 170);
-//        graphics.drawString(dateNais, 350, 170);
-        
-//        graphics.drawString(" *Lieu", 130, 200);
-//        graphics.drawString(jTLieuNais.getText(), 350, 200);
-//        
-//        graphics.drawString(" *NIF", 130, 230);
-//        graphics.drawString(jFTNIF.getText(), 350, 230);
-//        
-//        graphics.drawString(" *G. Sanguin", 130, 270);
-//        graphics.drawString((String) jCSanguin.getSelectedItem(), 350, 270);
-//        
-//        graphics.drawString(" *Grade", 130, 300);
-//        graphics.drawString((String) jCNEtude.getSelectedItem(), 350, 300);
-//             
-//        graphics.drawString(" *Poste", 130, 330);
-//        graphics.drawString(jTPoste.getText(), 350, 330);
-//        
-//        graphics.drawString(" *Date Embauche", 130, 360);
-//        graphics.drawString(daterecup, 350, 360);
-//        
-//        graphics.drawString(" *Statut", 130, 390);
-//        graphics.drawString((String) product_status.getSelectedItem(), 350, 390);
-//        
-//        graphics.drawString(" *Salaire", 130, 420);
-//        graphics.drawString(jTSalaire.getText()+" Gdes.", 350, 420);
-//        
-//        graphics.drawString(" *Téléphone", 130, 450);
-//        graphics.drawString(jFTTel.getText(), 350, 450);
-//        
-//        graphics.drawString(" *Email", 130, 480);
-//        graphics.drawString(jTEmail.getText(), 350, 480);
 
         return PAGE_EXISTS;
             }
