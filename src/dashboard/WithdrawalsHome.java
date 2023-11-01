@@ -47,6 +47,8 @@ public final class WithdrawalsHome extends javax.swing.JInternalFrame {
     public String selected_product;
     public int selected_product_id;
     public int selected_product_quantity;
+    public float selected_product_PA;
+    
     public void getData(){
         try{
 
@@ -296,6 +298,7 @@ public final class WithdrawalsHome extends javax.swing.JInternalFrame {
                 .addComponent(jBImprimer)
                 .addContainerGap(63, Short.MAX_VALUE))
         );
+        
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
@@ -438,10 +441,13 @@ public final class WithdrawalsHome extends javax.swing.JInternalFrame {
     	java.sql.Statement stmt1;
 		try {
 			stmt1 = maConnexion.ObtenirConnexion().createStatement();
-			java.sql.ResultSet resultat= stmt1.executeQuery("SELECT id,quantite FROM products WHERE nom='"+jCMedicaments.getSelectedItem().toString()+"'");
+			java.sql.ResultSet resultat= stmt1.executeQuery("SELECT id,quantite,PAU,PV FROM products WHERE nom='"+jCMedicaments.getSelectedItem().toString()+"'");
 			if(resultat.next()){
 			    selected_product_id = resultat.getInt(1);
 			    selected_product_quantity = resultat.getInt(2);
+			    selected_product_PA = resultat.getFloat("PAU");
+			    jTPrixVente.setText(resultat.getFloat(4)+"");
+			    System.out.print(selected_product_PA+" Est le prix d'achat");
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -468,7 +474,7 @@ public final class WithdrawalsHome extends javax.swing.JInternalFrame {
         	String strNumber = Float.toString(total_sold);
             try{
         
-            String requete="INSERT INTO withdrawals(produit_id,nom_produit,prix_vente,prix_vente_total,quantite_vendu)value ('"+selected_product_id+"','"+product_name_recup+"','"+prix_vente_recup+"','"+strNumber+"','"+quantite_vendu_recup+"')";
+            String requete="INSERT INTO withdrawals(produit_id,nom_produit,prix_vente,prix_vente_total,quantite_vendu,PA) value ('"+selected_product_id+"','"+product_name_recup+"','"+prix_vente_recup+"','"+strNumber+"','"+quantite_vendu_recup+"','"+selected_product_PA+"')";
             stmt=maConnexion.ObtenirConnexion().createStatement();
             stmt.executeUpdate(requete);
             

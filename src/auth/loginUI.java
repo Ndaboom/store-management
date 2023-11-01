@@ -138,7 +138,7 @@ public class loginUI {
 	        }else{
 	             this.t1 = resultat.getString("username");
 	             frmAuthentification.setVisible(false);
-	          new homeUI().setVisible(true);                
+	          new homeUI().setVisible(true);               
 	        }   
 	            
 	        }catch(Exception e){

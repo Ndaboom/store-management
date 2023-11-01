@@ -40,12 +40,12 @@ public class CongeHome extends javax.swing.JInternalFrame {
 
             java.sql.Statement stmt1=maConnexion.ObtenirConnexion().createStatement();
             java.sql.ResultSet resultat= stmt1.executeQuery("SELECT ref, nom, prenom, dateemb, poste, statut, datedebut, datefin, typeconge, nif FROM CONGE");
-	    jTable1.setModel(DbUtils.resultSetToTableModel(resultat));
+            jTable1.setModel(DbUtils.resultSetToTableModel(resultat));
 	
 	
        }catch(Exception e){
 	
-}
+       }
     }
     
 

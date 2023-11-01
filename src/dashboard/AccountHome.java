@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dashboard;
 
 import java.beans.PropertyChangeEvent;
@@ -12,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.JTable;
@@ -30,7 +26,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 public class AccountHome extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form Liste transactions et tri
+     * Creates new form Liste accounting & sort
      */
     Statement stmt;
     Connexion maConnexion=new Connexion();
@@ -117,9 +113,26 @@ public class AccountHome extends javax.swing.JInternalFrame {
     	   JOptionPane.showMessageDialog(null,"Error loading total incomes"+ e.toString());
        }
         
-       
-    }
+       // Fetch gains & tithes
+        
+        try{
 
+            java.sql.Statement stmt1= maConnexion.ObtenirConnexion().createStatement();
+            java.sql.ResultSet resultat= stmt1.executeQuery("SELECT SUM(prix_vente_total - PA * quantite_vendu) AS total_difference\n"
+            		+ "FROM withdrawals\n"
+            		+ "WHERE date_vente >= '"+input1+"' AND date_vente <= '"+input2+"'");
+            
+	        while(resultat.next()) {
+	        	lblNewLabel_5.setText(resultat.getString(1)+ " $");
+	        	lblNewLabel_7.setText(resultat.getFloat(1)/10+ " $");
+	        }
+	
+       }catch(Exception e){
+    	   JOptionPane.showMessageDialog(null,"Error loading total incomes"+ e.toString());
+       }
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -169,9 +182,9 @@ public class AccountHome extends javax.swing.JInternalFrame {
         com.toedter.calendar.JDateChooser jDateChooser1 = new com.toedter.calendar.JDateChooser();
         com.toedter.calendar.JDateChooser jDateChooser2 = new com.toedter.calendar.JDateChooser();
         
-        Date d = new Date(0);
-        jDateChooser1.setDate(d);
-        jDateChooser2.setDate(d);
+        Calendar currentCalendar = Calendar.getInstance();
+        jDateChooser1.setCalendar(currentCalendar);
+        jDateChooser2.setCalendar(currentCalendar);
         
         jDateChooser1.getDateEditor().addPropertyChangeListener(new PropertyChangeListener() {
 			@Override
@@ -267,38 +280,40 @@ public class AccountHome extends javax.swing.JInternalFrame {
         jPanel2.setLayout(jPanel2Layout);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        	jPanel1Layout.createParallelGroup(Alignment.TRAILING)
+        		.addGroup(jPanel1Layout.createSequentialGroup()
+        			.addContainerGap()
+        			.addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING)
+        				.addComponent(jPanel2, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 1141, Short.MAX_VALUE)
+        				.addComponent(jScrollPane1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 1141, Short.MAX_VALUE))
+        			.addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(15, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+        	jPanel1Layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(jPanel1Layout.createSequentialGroup()
+        			.addGap(15)
+        			.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 373, GroupLayout.PREFERRED_SIZE)
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE)
+        			.addContainerGap(53, Short.MAX_VALUE))
         );
+        jPanel1.setLayout(jPanel1Layout);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(2, 2, 2))
+        	layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(layout.createSequentialGroup()
+        			.addComponent(jPanel1, GroupLayout.DEFAULT_SIZE, 1165, Short.MAX_VALUE)
+        			.addContainerGap())
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        	layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(layout.createSequentialGroup()
+        			.addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, 569, GroupLayout.PREFERRED_SIZE)
+        			.addContainerGap(113, Short.MAX_VALUE))
         );
+        getContentPane().setLayout(layout);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
